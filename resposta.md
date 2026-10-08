@@ -56,7 +56,32 @@ Exemplo:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Heterogeneidade de Formatos (Múltiplas Camadas de Processamento)
+Arquivos em três naturezas diferentes: .csv (estruturado), .pdf (semiestruturado) e .png (não estruturado). 
+Impacto: Não é possível utilizar um pipeline único de ingestão. É necessário orquestrar três fluxos distintos: 
+•	Ingestão direta tabular (ex.:  AWS Glue).
+•	Extração de texto/tabelas vetoriais de PDF (ex.: AWS Textract).
+•	Pipeline de OCR e visão computacional para imagens.
+Elementos Manuscritos, Carimbos e Marcações Visuais no PNG
+•	Presença de escrita à mão: Anotações como "conferir CRM" (em azul) e "ação prioritária" dentro de um círculo vermelho no item de deliberações.
+•	Carimbos e assinaturas: O carimbo "DOCUMENTO FICTICIO" e as assinaturas no rodapé podem gerar ruído ou sobreposição de caracteres.
+•	Impacto: Mecanismos de OCR convencionais (que só leem texto tipográfico) ignoram ou corrompem textos manuscritos (Handwriting Recognition - HWR), perdendo apontamentos humanos importantes.
+Divergência de Layout e Estrutura entre as Atas
+Inconsistência nos Padrões de Dados e Notações
+•	Representação de valores monetários e números: 
+o	No CSV: Valores float decimais sem formatação monetária (ex.: 117700.00, 15 para percentual).
+o	No PDF: Padrão brasileiro por extenso (ex.: R$ 4.280.000, 91,4%).
+o	No PNG: Notação abreviada (ex.: R$ 9,85 mi, +1,8 p.p., 41.320).
+•	Formatos de data heterogêneos: 
+o	ISO (2026-09-25 no CSV e bloco final do PDF), formato brasileiro (08/07/2026 e 28/02/2026) e por extenso (15 de janeiro de 2026 no PNG).
+•	Impacto: Exige uma etapa pesada de sanitização e normalização antes de qualquer análise quantitativa unificada.
+Ausência de Padrão de Nomenclatura e Metadados dos Arquivos
+•	Nomes dos arquivos: 
+o	vendas_sa_dados_ficticios_laboratorio.csv
+o	ata_reuniao_vendas_sa.pdf
+o	ata_resultados_vendas_novos_dados.png
+•	Impacto: Os nomes não contêm data de referência (YYYYMMDD), versão ou código do documento. Em um bucket S3, isso dificulta a partição automática por data, ordenação cronológica e governança de catálogo de dados.
+
 ```
 
 ---
