@@ -322,7 +322,7 @@ Explique como os textos extraídos seriam limpos, normalizados e preparados para
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Logo após a extração dos documentos, o texto passa por um refinamento na AWS para se tornar verdadeiramente útil. Primeiro, o AWS Lambda realiza uma limpeza geral: corrige falhas de leitura, remove caracteres soltos e padroniza datas e valores financeiros para que todos os arquivos falem a mesma língua. Em seguida, o Amazon Comprehend analisa o conteúdo para identificar elementos fundamentais — como clientes, vendedores, regiões e produtos —, e no mascaramento de dados sensíveis (PII) para conformidade com a LGPD. O texto higienizado é então dividido pelo Lambda em partes menores e bem organizadas, preservando o contexto de tabelas e tópicos. Por fim, o Amazon Bedrock utiliza inteligência artificial para traduzir essas partes em um formato compreensível para o motor de busca, armazenando tudo no Amazon OpenSearch Service (ou Bedrock Knowledge Bases). Dessa forma, qualquer usuário consegue fazer perguntas em linguagem comum e obter respostas precisas em segundos.
 ```
 
 ---
