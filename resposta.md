@@ -93,7 +93,42 @@ Liste quais informações precisam ser identificadas para transformar os documen
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Para transformar esses documentos em um sistema de busca inteligente (onde qualquer pessoa ou IA possa encontrar respostas rapidamente), precisamos extrair 6 tipos principais de informação:
+
+Dados do Documento (Para saber qual é e de quando é)
+*Nome e Código do arquivo: ex.: ata_reuniao_vendas_sa.pdf, Código VSA-COM-2026-07.
+*Tipo: se é uma Ata de Reunião, um Resumo Semestral ou uma Planilha de Vendas.
+*Data: dia da reunião ou período dos dados (ex.: 08/07/2026, 2º Semestre de 2026).
+
+Pessoas e Responsáveis (Para saber quem é quem)
+*Participantes e Cargos: ex.: Mariana Costa (Diretora), Rafael Nunes (Gerente Sudeste).
+*Vendedores: nomes dos vendedores da base comercial (ex.: Lucas Ribeiro, Henrique Pires).
+*Donos das Tarefas: quem é o responsável por cada entrega.
+
+Vendas e Clientes (Para pesquisar o histórico comercial)
+*Nome do Cliente e Segmento: ex.: Orion Digital, empresas de Tecnologia, Varejo, Logística.
+*Região: Sudeste, Sul, Nordeste, Centro-Oeste e Norte.
+*Produtos e Campanhas: ex.: CRM Profissional, Integração Enterprise, Campanha "Rota 120".
+*Status da Venda: se foi Ganha, Perdida (e o motivo da perda) ou se está Em Negociação.
+
+Números e Indicadores (Para consultar métricas e valores)
+*Faturamento e Metas: quanto a empresa planejou vs. quanto realmente vendeu (ex.: R$ 9,85 milhões).
+*Valores das Vendas: valor bruto, desconto dado e valor final de cada contrato.
+*Métricas de Performance: taxa de conversão (%), ticket médio e tempo médio de negociação (dias).
+
+Decisões, Prazos e Riscos (Para acompanhar o que foi combinado)
+*Decisões Aprovadas: o que a diretoria decidiu na reunião.
+*Plano de Ação: 
+***A tarefa a ser feita (ex.: listar as 120 contas da campanha).
+***O responsável (ex.: Camila Rocha).
+***O prazo limite (ex.: 20/07/2026).
+*Riscos Identificados: problemas mapeados e o que fazer para evitá-los.
+
+Anotações Feitas à Mão (Para não perder alertas manuais)
+*Recados nas margens: avisos como "conferir CRM".
+*Prazos destacados: círculos e notas de "ação prioritária" em datas específicas.
+*Assinaturas e Carimbos: confirmação de quem aprovou o documento.
+
 ```
 
 ---
