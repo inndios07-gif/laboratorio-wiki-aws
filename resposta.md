@@ -23,26 +23,20 @@ https://github.com/inndios07-gif/laboratorio-wiki-aws
 
 ## 1.1 Formatos encontrados na pasta `raw/`
 
-Descreva quais tipos de arquivos existem dentro da pasta `raw/`.
+Descreva quais tipos de arquivos existem dentro da pasta raw/.
 
-```md
 Exemplo de como responder, com o formato e o que ele implica:
 - <extensao>: <nasce digital ou precisa de OCR?>, <o que da para extrair>
-```
+Abra a pasta e liste o que voce encontrou de fato. Esta quest avalia a sua leitura do acervo, entao a resposta certa e a que corresponde aos arquivos.
 
-> Abra a pasta e liste o que voce encontrou de fato. Esta quest avalia a sua
-> leitura do acervo, entao a resposta certa e a que corresponde aos arquivos.
+Sua resposta:
+A análise dos três documentos presentes na pasta raw/ evidencia diferentes características quanto à origem, estrutura e necessidade de aplicação de técnicas de Reconhecimento Óptico de Caracteres (OCR).
+O primeiro documento, denominado vendas_sa_dados_ficticios_laboratorio.csv, apresenta-se na extensão CSV. Trata-se de um arquivo de origem digital, totalmente estruturado, o que possibilita a leitura e o processamento direto por sistemas computacionais. Por estar em formato tabular e organizado, não há necessidade de aplicação de OCR, visto que os dados já se encontram acessíveis de forma nativa.
+O segundo documento, ata_reuniao_vendas_sa.pdf, possui extensão PDF e também tem origem digital. Diferentemente de arquivos digitalizados em imagem, este documento apresenta texto selecionável, permitindo extração direta por meio de código ou ferramentas de manipulação de PDF. Dessa forma, não há demanda por OCR, uma vez que o conteúdo textual pode ser obtido sem etapas adicionais de reconhecimento óptico.
+Por fim, o terceiro documento, ata_resultados_vendas_novos_dados.png, encontra-se na extensão PNG e corresponde a um arquivo de imagem. Sua composição simula uma ata impressa em papel, contendo anotações e carimbos. Nesse caso, o conteúdo não está estruturado digitalmente, sendo apenas visual. Assim, torna-se indispensável a aplicação de OCR para viabilizar a extração do texto presente na imagem, permitindo que as informações sejam convertidas em formato manipulável e estruturado.
+Em síntese, conclui-se que apenas o arquivo em formato PNG requer processamento via OCR para extração de informações. Os demais arquivos, por serem digitais e estruturados, já oferecem acesso direto ao conteúdo textual ou tabular, dispensando o uso dessa tecnologia.
 
-**Sua resposta:**
 
-```md
-
-Verificando e analisando os três documentos da pasta raw/, nesta análise o arquivos "vendas_sa_dados_ficticios_laboratorio" possui extensão csv sua origem nasce digital
- e 100% estruturado e não possui necessidade de OCR, segundo arquivo "ata_reuniao_vendas_sa",
- posssui extensão pdf sua origem nasce digital não necessita de OCR de imagem, pois o texto é
-diretamente selecion´´avel e pode ser extraído via código. Terceiro arquivo
- "ata_resultados_vendas_novos_dados", sua extensão .png é um arquivo de imagem simulando
-uma ata impressa em folha com anotações e carimbos é indispensável a necesssidade de OCR.
 
 ---
 
