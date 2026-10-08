@@ -37,7 +37,7 @@ Exemplo de como responder, com o formato e o que ele implica:
 
 ```md
 Preencha aqui.
-```
+Verificando e analisando os três documentos da pasta raw/, nesta análise o arquivos "vendas_sa_dados_ficticios_laboratorio" possui extensão csv sua origem nasce digital e 100% estruturado e não possui necessidade de OCR, segundo arquivo "ata_reuniao_vendas_sa", posssui extensão pdf sua origem nasce digital não necessita de OCR de imagem, pois o texto é diretamente selecion´´avel e pode ser extraído via código. Terceiro arquivo "ata_resultados_vendas_novos_dados", sua extensão .png é um arquivo de imagem simulando uma ata impressa em folha com anotações e carimbos é indispensável a necesssidade de OCR.
 
 ---
 
