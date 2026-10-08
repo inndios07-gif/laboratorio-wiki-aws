@@ -266,7 +266,12 @@ Serviços que você pode considerar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+PDF Escaneado - Amazon Textract	OCR Assíncrono + Layout	- Velocidade Segundos a minutos - Custo Estimado Médio (por página OCR).
+Imagem (.png/.jpg) - Amazon Textract / Bedrock	OCR Síncrono / Visão Computacional - Velocidade	1 a 3 segundos Custo Estimado Baixo a Médio.
+PDF Digital - AWS Lambda Extração direta vetorial de texto - Velocidade	Milissegundos - Custo Estimado	Quase zero (Serverless)
+Arquivo .txt - AWS Lambda	Leitura direta do buffer - Velocidade Milissegundos - Custo Estimado Quase zero
+Arquivo .docx - AWS Lambda (python-docx) Leitura de tags XML/Parágrafos - Velocidade Milissegundos - Custo Estimado	Quase zero
+Arquivo .md - AWS Lambda	Divisão estruturada por tópicos - Velocidade Milissegundos	- Custo Estimado Quase zero
 ```
 
 ---
