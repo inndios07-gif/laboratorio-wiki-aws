@@ -144,7 +144,23 @@ Como você classificaria os documentos sem depender de subpastas dentro de `raw/
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+A melhor prática de engenharia de dados e arquitetura na nuvem é utilizar uma classificação orientada a conteúdo e metadados.
+
+Verifica o formato real do arquivo (não apenas a extensão):
+*Se text/csv ou text/plain - Encaminha para validação de colunas.
+*Se application/pdf - Encaminha para extração de texto digital.
+*Se image/png ou image/jpeg - Encaminha para rota de OCR.
+
+Verifica o conteúdo por IA:
+*Para CSV: Lê o cabeçalho. Ao encontrar oportunidade_id, vendedor_ficticio, ..., classifica como tipo_negocio = "crm_oportunidades".
+*Para PDF / Imagens: Extrai o texto do cabeçalho da página 1:
+***Se contém "ATA DE REUNIÃO" + "Código da ata: VSA-COM-" - Classifica como tipo_negocio = "ata_acompanhamento_mensal".
+***Se contém "RESULTADOS DO 2º SEMESTRE" - Classifica como tipo_negocio = "resumo_executivo_semestral".
+
+Classificação Semântica com IA (LLM / AWS Bedrock)
+*Para documentos livres ou sem padrão fixo, uma chamada rápida a um modelo de linguagem analisa uma amostra do texto e retorna um JSON padronizado:
+
+Como não usamos pastas, essas classificações são salvas em dois lugares em Tags de Objeto no Armazenamento AWS S3 Object Tagging ou AWS Glue Data Catalog, seria as opções escolhidas.
 ```
 
 ---
