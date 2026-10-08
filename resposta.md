@@ -225,7 +225,19 @@ Explique como garantir que os arquivos originais sejam mantidos intactos e rastr
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+A AWS combinam recursos de segurança de armazenamento, verificação de integridade e registro de linhagem.
+
+1. S3 Object Lock - Bloqueia qualquer tentativa de alteração ou exclusão de um arquivo durante um período determinado (ou indefinido).Nem mesmo o usuário administrador (root) da conta consegue apagar ou sobrescrever o arquivo enquanto a regra de retenção estiver ativa.
+
+2. S3 Versioning - Se um arquivo com o mesmo nome (ata_reuniao_vendas_sa.pdf) for enviado novamente por engano, o S3 não sobrescreve o anterior. Ele cria uma nova versão com um ID único (versionId), preservando o arquivo original intacto no histórico.
+
+3. IAM e Bucket Policies - A pasta raw/ recebe uma regra explícita de Deny (Bloqueio) para ações de exclusão.
+
+4. Checksums SHA-256 - No momento do upload, o S3 calcula e armazena o hash criptográfico (SHA-256) do arquivo. Qualquer verificação futura compara o hash atual com o original. Se um único caractere for modificado, o hash muda e o sistema acusa adulteração ou corrupção de dados.
+
+5. Auditoria Completa de Acessos com AWS CloudTrail - Quem enviou, quando enviou, de onde veio e como o arquivo foi processado.
+
+6.Data Lineage - No momento em que o arquivo aterrissa no S3, uma função Lambda extrai os metadados e grava um registro único em uma tabela de rastreio (ex.: no Amazon DynamoDB):
 ```
 
 ---
