@@ -283,9 +283,34 @@ Explique como sua solução identificaria e registraria erros de processamento.
 **Sua resposta:**
 
 ```md
-Preencha aqui.
-```
+De acordo com o aprendizado e minhas pesquisas a solução monitora a qualidade do processamento validando índices de confiança (Confidence Score do OCR) e consistência dos arquivos. Sob uma perspectiva a ocorrência de falhas não é uma exceção, mas uma certeza estatística decorrente do volume, da concorrência e da heterogeneidade dos dados, onde se tem ferramentas que pode antecipar, isolar, reprocessar e notificar anomalias sem interromper o fluxo operacional contínuo. Ciatei minha solução para identificar essas falhas:
 
+1. Detecção Precoce e Validação de Qualidade (Data Quality Gateways) - Antes e durante as etapas de extração, o sistema atua preventivamente por meio de barreiras de validação que impedem que dados corrompidos ou ilegíveis avancem no pipeline. funções serverless detecta arquivo binário corrompido renomeado inadvertidamente como .pdf.
+
+2. Tratamento de Falhas Transitórias: Retries com Backoff Exponencial e Jitter - Nem toda falha representa um problema no arquivo; muitas vezes, decorrem de instabilidades passageiras de rede, limites temporários de requisições por segundo (throttling de APIs como Textract e Bedrock) ou saturação momentânea de concorrência.
+
+3. Isolamento de Falhas Críticas: Dead Letter Queue (SQS DLQ) e Quarentena Lógica - Quando um arquivo atinge o limite máximo de tentativas sem sucesso ou apresenta um erro irrecuperável (como um PDF criptografado por senha ou arquivo irreparavelmente corrompido), o sistema executa o desacoplamento da carga de trabalho.
+
+4. O registro é feito de forma redundante em dois níveis: Logs Técnicos e Catálogo de Negócio.
+*Logs Técnicos Detalhados (Amazon CloudWatch Logs) - Cada falha gera um log estruturado em JSON contendo o rastreio completo do erro (stack trace).
+}
+  "timestamp": "2026-10-08T13:45:00Z",
+  "level": "ERROR",
+  "arquivo": "s3://data-lake-vendas-sa/raw/ata_resultados_vendas_novos_dados.png",
+  "codigo_erro": "TEXTRACT_LOW_CONFIDENCE",
+  "mensagem": "Extração abaixo do limite aceitável de confiança (média: 48.2%)",
+  "tentativas": 3,
+  "requestId": "c1a2b3d4-e5f6-7890-abcd-1234567890ef"
+}
+*Atualização no Catálogo de Documentos (Amazon DynamoDB) -
+{
+  "documento_id": "DOC-20261008-002",
+  "nome_original": "ata_resultados_vendas_novos_dados.png",
+  "status_processamento": "FALHA_QUALIDADE",
+  "motivo_falha": "Necessita revisão humana: anotações manuscritas ilegíveis",
+  "data_ultima_tentativa": "2026-10-08T13:45:02Z",
+  "requer_revisao_manual": true
+}
 ---
 
 # ✅ Quest 3: A Relíquia dos Metadados
