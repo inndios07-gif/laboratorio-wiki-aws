@@ -9,10 +9,10 @@
 ## 👤 Identificação
 
 **Nome:**  
-Preencha aqui
+Arnaldo josé de Oliveira Juníor
 
 **Data:**  
-Preencha aqui
+08/10/2026
 
 **Link do repositório:**  
 Preencha aqui
