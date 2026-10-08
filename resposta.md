@@ -15,7 +15,7 @@ Arnaldo josé de Oliveira Juníor
 08/10/2026
 
 **Link do repositório:**  
-Preencha aqui
+https://github.com/inndios07-gif/laboratorio-wiki-aws
 
 ---
 
