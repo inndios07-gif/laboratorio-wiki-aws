@@ -182,7 +182,38 @@ Serviços que você pode considerar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Na AWS, a ingestão e o armazenamento dos arquivos da pasta raw/ seguem o padrão de Data Lake na nuvem, utilizando o Amazon S3 como repositório central e uma arquitetura orientada a eventos. E pesquisando encontrei 3 formas comum de envio:
+
+1. Via Linha de Comando (AWS CLI) — Ideal para administradores
+*** aws s3 sync ./raw s3://data-lake-vendas-sa/raw/
+
+2. Via Código Python (boto3) — Ideal para rotinas automatizadas
+***import boto3
+s3 = boto3.client('s3')
+bucket_name = 'data-lake-vendas-sa'
+# Exemplo de upload atribuindo Tags de metadados
+s3.upload_file(
+    Filename='ata_reuniao_vendas_sa.pdf',
+    Bucket=bucket_name,
+    Key='raw/ata_reuniao_vendas_sa.pdf',
+    ExtraArgs={
+        'Tagging': 'departamento=comercial&origem=upload_direto'
+    }
+)
+
+3. Via Interface Web com S3 Presigned URLs — Ideal para usuários finais
+*Uma função AWS Lambda gera uma URL temporária e segura (Presigned URL), o navegador do usuário envia o arquivo diretamente para o S3, sem sobrecarregar o servidor web e sem expor credenciais da AWS.
+
+Após o envio o arquivo entra no S3 e o ecossistema do AWS processa os dados automaticamente.
+1. Gatilho de Evento (S3 Event Notification): O S3 emite um evento s3:ObjectCreated:*.
+2. Triagem Automática (AWS Lambda):
+***Lê o arquivo e identifica o formato (CSV, PDF ou PNG).
+***Registra os metadados no Amazon DynamoDB (Catálogo de Documentos).
+3. Roteamento para o Serviço Correto:
+***Se for .csv - Disponibiliza para consulta via Amazon Athena e ingestão no AWS Glue.
+*** Se for .pdf ou .png - Envia para o Amazon Textract (extração de texto, tabelas e anotações manuscritas) e posterior indexação vetorial (ex.: Amazon Bedrock / OpenSearch para busca semântica).
+
+
 ```
 
 ---
