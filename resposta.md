@@ -785,7 +785,15 @@ Exemplo:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+- PDFs escaneados ou imagens podem gerar textos com baixa confiança; o Amazon Textract pode precisar de ajustes de pré‑processamento de imagem para reduzir erros de leitura.
+- Trechos longos podem ultrapassar o limite de tokens dos modelos Bedrock; o algoritmo de chunking deve equilibrar tamanho e sobreposição para manter contexto.
+- Geração de embeddings e respostas gera consumo de tokens; monitorar via CloudWatch e aplicar limites por usuário é essencial para evitar despesas inesperadas.
+- Consultas k‑NN no OpenSearch podem ficar lentas com milhões de chunks; é necessário dimensionar réplicas e usar índices otimizados.
+- O Amazon Comprehend pode não detectar todos os dados sensíveis; políticas de revisão manual podem ser necessárias para compliance LGPD.
+- Tags de confidencialidade no S3 e políticas IAM devem estar sincronizadas; divergências podem expor documentos restritos.
+- Vários usuários disparando consultas simultâneas podem saturar limites de taxa (throttling) do Bedrock ou OpenSearch; usar filas (SQS) ou limitação por token ajuda.
+- Modelos gerativos podem “alucinar” fatos não presentes nos textos; inserir instruções de citação (source_uri) e validar com feedback do usuário mitiga o risco.
+- O site estático em S3 + CloudFront deve lidar com picos de tráfego; habilitar compressão e cache adequado garante desempenho consistente.
 ```
 
 ---
