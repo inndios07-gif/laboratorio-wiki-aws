@@ -343,17 +343,44 @@ Defina quais metadados você extrairia de cada documento.
 
 | Metadado | Por que ele é importante? |
 |---|---|
-| Nome do documento | Preencha aqui |
-| Tipo do documento | Preencha aqui |
-| Data identificada | Preencha aqui |
-| Tema principal | Preencha aqui |
-| Participantes | Preencha aqui |
-| Decisões tomadas | Preencha aqui |
-| Responsáveis | Preencha aqui |
-| Próximos passos | Preencha aqui |
-| Nível de confidencialidade | Preencha aqui |
-| Caminho do arquivo original | Preencha aqui |
+| Nome do documento | ata_reuniao_vendas_sa.pdf |
+| Tipo do documento | Ata de Reunião Comercial (Acompanhamento Mensal) |
+| Data identificada | 8/07/2026 (Horário: 09h00 às 10h35) |
+| Tema principal | Revisão de desempenho de junho/2026, análise do funil e definição da campanha "Rota 120". |
+| Participantes | Mariana Costa, Rafael Nunes, Camila Rocha, Bruno Almeida, Fernanda Lima, Livia Mendes. |
+| Decisões tomadas | D-001 a D-005: Revisão semanal do pipeline; limite de 7 dias sem atividade; campanha Rota 120, etc. |
+| Responsáveis | Mariana Costa, Livia Mendes, Rafael Nunes, Fernanda Lima, Camila Rocha e Bruno Almeida.|
+| Próximos passos | Ações A-001 a A-006 (prazos: 13/07 a 24/07/2026) e Próxima Reunião em 03/08/2026. |
+| Nível de confidencialidade | Uso didático / Dados 100% simulados (Sem valor jurídico). |
+| Caminho do arquivo original | raw/ata_reuniao_vendas_sa.pdf |
+| Código de Referência | VSA-COM-2026-07 |
+| Necessidade de OCR | Não (Documento nasce digital com texto nativo). |
 
+| Nome do documento | ata_resultados_vendas_novos_dados.png |
+| Tipo do documento | Ata de Reunião Comercial (Resumo Semestral) |
+| Data identificada | 15 de janeiro de 2026 (Horário: 09h00 às 11h10)|
+| Tema principal | Resultados do 2º semestre e definição de metas/ações para o novo ciclo. |
+| Participantes | Marina Lopes, Paulo Mendes, Carla Ribeiro, Diego Alves, Renata Souza e supervisores. |
+| Decisões tomadas | Expansão no Norte, revisão de descontos por margem, campanha de ticket médio e painel de conversão. |
+| Responsáveis |Paulo Mendes, Renata Souza, Diego Alves, Carla Ribeiro e Marina Lopes.|
+| Próximos passos | Prazos das deliberações (05/02 a 28/02/2026) com foco prioritário na expansão do Norte. |
+| Nível de confidencialidade | DOCUMENTO FICTICIO (Carimbo no rodapé). |
+| Caminho do arquivo original | raw/ata_resultados_vendas_novos_dados.png |
+|Anotações Manuscritas |Recado em azul: "conferir CRM"; Destaque circular em vermelho: "ação prioritária". |
+| Necessidade de OCR | Sim (Obrigatório): Requer OCR com suporte a texto e manuscrito (HWR). |
+
+| Nome do documento | vendas_sa_dados_ficticios_laboratorio.csv |
+| Tipo do documento | Base de Dados Transacional / CRM de Oportunidades |
+| Data identificada | Intervalo entre 01/07/2026 e 03/10/2026 (criação e fechamento)|
+| Tema principal | Registro individualizado de oportunidades de vendas, receitas, descontos e motivos de perda. |
+| Participantes |Vendedores: Lucas Ribeiro, Henrique Pires, Ana Torres, etc. / Clientes: Orion, Nexo, Atlas, etc. |
+| Decisões tomadas | Status de cada oportunidade (Ganha, Perdida, Qualificação, Em negociação, Proposta enviada). |
+| Responsáveis |Vendedor atribuído a cada oportunidade na coluna vendedor_ficticio.|
+| Próximos passos | Datas e tarefas em proxima_atividade e observacao (ex.: "Proposta em revisão jurídica"). |
+| Nível de confidencialidade | Dados Fictícios para Laboratório Prático. |
+| Caminho do arquivo original | raw/vendas_sa_dados_ficticios_laboratorio.csv |
+|Chave Primária (ID) |oportunidade_id (Padrão: OPP-2026XXXX). |
+| Necessidade de OCR | Não (Arquivo tabular 100% estruturado). |
 Adicione outros metadados, se necessário.
 
 ---
