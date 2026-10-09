@@ -655,7 +655,21 @@ Serviços que você pode considerar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Para o controle de acesso quem tem permissão veja ou altere os documentos, a solução usa Amazon Cognito como ponto de entrada de identidade. Cada usuário se autentica (login tradicional ou SSO via Google/Office 365) e recebe um JWT contendo seu grupo (por exemplo, sales, management, auditor). O token é enviado em todas as chamadas ao API Gateway, que verifica as políticas de autorização definidas em IAM. As políticas permitem, por exemplo, que o grupo sales leia arquivos na pasta raw/ mas não copie ou delete; já management tem acesso total e pode gerar relatórios.
+
+*Criptografia em repouso – Todos os objetos do bucket S3 são protegidos com SSE‑KMS (chave gerenciada pelo cliente).
+*Criptografia em trânsito – O CloudFront entrega o site via HTTPS e o API Gateway expõe apenas HTTPS.
+*Imutabilidade – O bucket está configurado com S3 Object Lock (modo Compliance) e Versionamento, de modo que nenhuma operação de delete ou overwrite possa alterar o conteúdo original, respeitando requisitos de retenção.
+*Máscara de PII – Antes de armazenar o texto, um Lambda chama Amazon Comprehend para identificar informações pessoais (CPF, e‑mail) e substituí‑las por placeholders, evitando que dados sensíveis circulem na camada de busca.
+
+Na auditoria de consultas Todo o tráfego de API Gateway, chamadas a Lambda e acessos ao bucket S3 são registrados automaticamente pelo AWS CloudTrail. As entradas de log contêm quem (ARN do usuário), quando (timestamp) e o que (ação, recurso, parâmetros).
+
+Custos, erros e qualidades de respostas usaria métricas listadas abaixo:
+    Custos de S3 / Lambda / Bedrock - Dashboard de custo no console.
+    Taxa de erro de API/Lambda - Alarmes configurados (Alarm - SNS - Slack) para notificar a equipe.
+    Tempo de resposta da busca - Gráficos de tendência no CloudWatch.
+    Qualidade da resposta - Visualizado em um painel do Amazon QuickSight, que cruza aprovação com tipos de documento e nível de confidencialidade.
+    Uso de Bedrock (tokens consumidos) - Alertas quando o consumo ultrapassa limites orçados.
 ```
 
 ---
