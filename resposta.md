@@ -355,7 +355,7 @@ Defina quais metadados você extrairia de cada documento.
 | Caminho do arquivo original | raw/ata_reuniao_vendas_sa.pdf |
 | Código de Referência | VSA-COM-2026-07 |
 | Necessidade de OCR | Não (Documento nasce digital com texto nativo). |
-
+|---|---|
 | Nome do documento | ata_resultados_vendas_novos_dados.png |
 | Tipo do documento | Ata de Reunião Comercial (Resumo Semestral) |
 | Data identificada | 15 de janeiro de 2026 (Horário: 09h00 às 11h10)|
@@ -368,7 +368,7 @@ Defina quais metadados você extrairia de cada documento.
 | Caminho do arquivo original | raw/ata_resultados_vendas_novos_dados.png |
 |Anotações Manuscritas |Recado em azul: "conferir CRM"; Destaque circular em vermelho: "ação prioritária". |
 | Necessidade de OCR | Sim (Obrigatório): Requer OCR com suporte a texto e manuscrito (HWR). |
-
+|---|---|
 | Nome do documento | vendas_sa_dados_ficticios_laboratorio.csv |
 | Tipo do documento | Base de Dados Transacional / CRM de Oportunidades |
 | Data identificada | Intervalo entre 01/07/2026 e 03/10/2026 (criação e fechamento)|
