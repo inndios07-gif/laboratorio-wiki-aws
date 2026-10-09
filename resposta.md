@@ -733,7 +733,17 @@ Exemplo de estrutura:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+1. Upload local – Os arquivos (PDF, PNG, CSV, DOCX, MD) são colocados na pasta raw/ do repositório ou enviados diretamente pelo usuário.
+2. incronização com S3 – Um script (AWS CLI aws s3 sync ou GitHub Actions) copia os arquivos para o bucket Amazon S3 data‑lake‑vendas‑sa/raw/.
+3. Detecção de formato – O Lambda lê a assinatura do arquivo; se for imagem ou PDF escaneado, encaminha para Amazon Textract (modo assíncrono) que devolve texto, tabelas e anotações manuscritas.
+4. Extração direta – Se o documento já for digital (PDF nativo, CSV, DOCX, MD), o Lambda usa bibliotecas PyMuPDF, python‑docx ou leitura de CSV para extrair o conteúdo puro sem OCR.
+5. Limpeza e padronização – O texto bruto passa por rotinas.
+6. Extração de metadados – O mesmo Lambda aplica expressões regulares e NER (via Comprehend) para identificar nome do documento, tipo, data, tema, participantes, decisões, responsáveis, próximos passos e nível de confidencialidade; grava tudo em Amazon DynamoDB.
+7. Chunking (fragmentação) – O texto limpo é dividido em blocos lógicos (por título, tabela ou limite de ~500 tokens) com sobreposição de 100 tokens, gerando um JSON
+8. Geração de embeddings – Cada chunk é enviado ao Amazon Bedrock (modelo Titan Text Embeddings) que devolve um vetor numérico.
+9. Indexação vetorial – Os vetores são inseridos no índice k‑NN do Amazon OpenSearch Service.
+10. Interface de consulta – O usuário acessa a Wiki (site estático hospedado em S3 + CloudFront) e, ao digitar uma pergunta, o front‑end chama o API Gateway - Lambda - gera o embedding da query (Bedrock) - busca os chunks mais similares em OpenSearch.
+11.Geração de resposta – Os chunks recuperados são enviados ao modelo generativo do Amazon Bedrock (Claude/Titan) que elabora uma resposta em linguagem natural, citando a origem (source_uri). A resposta volta ao front‑end, que a exibe com link “Ver documento original”.
 ```
 
 ---
