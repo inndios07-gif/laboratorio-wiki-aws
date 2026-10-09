@@ -466,7 +466,17 @@ Serviços que você pode considerar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+todo o ciclo – do arquivo bruto ao metadado estruturado, passando por buscas inteligentes e controle de acesso – fica totalmente integrado dentro do ecossistema AWS, garantindo rastreabilidade, consistência e disponibilidade para quem precisar consultar ou processar os documentos.
+
+1. Amazon S3 (bucket raw/) - Arquivo bruto (PDF, PNG, CSV, …) – camada Bronze do Data Lake. Cada objeto tem um URI (s3://<bucket>/raw/<arquivo>) e, opcionalmente, tags (confidentiality=public, status=raw). O URI é o ponto de ancoragem que os demais serviços usarão para “apontar” de volta ao arquivo.
+
+2. Amazon DynamoDB (tabela DocumentMetadata) - Catálogo de metadados estruturado: nome, tipo, data, tema, participantes, decisões, responsáveis, próximos passos, nível de confidencialidade, etc. Cada linha inclui os campos document_id (chave primária) e s3_uri (e, se o bucket estiver versionado, s3_version). Esses campos criam a relação 1‑para‑1 entre o registro e o objeto S3.
+
+3. AWS Glue Data Catalog - Definição de esquemas (ex.: colunas da CSV) e classificação de tipos de documento (ata, relatório, base). As tabelas apontam para o mesmo bucket S3 usando Location = s3://…/raw/<arquivo>. Assim, consultas em Athena/Glue sabem exatamente qual arquivo ler.
+
+4. Amazon OpenSearch Service (ou Bedrock Knowledge Base) - Índice de busca semântica (texto completo + embeddings). Cada documento indexado contém o campo source_uri que replica o s3_uri de DynamoDB, permitindo que a pesquisa retorne o caminho do arquivo.
+
+5. AWS Lake Formation - Políticas de controle de acesso baseadas em tags e atributos. Usa as mesmas tags do S3 (confidentiality) e os atributos de linha da tabela DynamoDB para aplicar regras de acesso granulares.
 ```
 
 ---
