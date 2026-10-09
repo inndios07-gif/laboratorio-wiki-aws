@@ -392,7 +392,62 @@ Explique como o Amazon Bedrock poderia ajudar a identificar temas, decisões, re
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+O Amazon Bedrock é o serviço gerenciado da AWS que disponibiliza Modelos de Linguagem e Visão de última geração (como Anthropic Claude, Amazon Nova e Meta Llama).No processamento dos documentos analisados (atas, resumos e planilhas), o Bedrock atua como um analista inteligente automatizado, capaz de ler texto corrido, tabelas e anotações manuscritas para extrair significado e transformá-lo em dados estruturados.
+
+Vantagens do Bedrock nessa Arquitetura
+**Elimina Regras Rígidas de Código: Funciona mesmo se o modelo da ata mudar de layout a cada mês.
+**Capacidade Multimodal: Interpreta tanto o texto digital quanto marcas visuais e caligrafia em imagens.
+**Integração com RAG (Knowledge Bases): Permite cruzar a ata com a planilha CSV para responder perguntas como: "As oportunidades perdidas por preço no CSV batem com o que foi dito na ata?".
+
+Entrada Bruta vs. Saída do Amazon Bedrock
+
+***Texto bruto da Ata(PDFD/PNG) ---- Amazon Bedrock (LLM Multimodal) ---- JSON Estruturado e Enriquecido
+{
+  "documento": "VSA-COM-2026-07",
+  "tema_principal": "Acompanhamento comercial de junho e campanha Rota 120",
+  "resumo_executivo": "A receita mensal atingiu R$ 3,91 mi (91,4% da meta). Decidiu-se padronizar motivos de perda no CRM e lançar a campanha Rota 120 para o 3º trimestre visando R$ 6 mi em novo pipeline.",
+  "decisoes": [
+    "Adotar regra de 7 dias sem atividade para sinalizar oportunidades estagnadas",
+    "Implantar revisão semanal de funil às segundas-feiras"
+  ],
+  "plano_de_acao_pendencias": [
+    {
+      "acao": "Revisar oportunidades sem atividade há mais de 7 dias",
+      "responsavel": "Rafael Nunes",
+      "prazo": "2026-07-13",
+      "prioridade": "Alta"
+    },
+    {
+      "acao": "Definir lista de contas da campanha Rota 120",
+      "responsavel": "Camila Rocha",
+      "prazo": "2026-07-20",
+      "prioridade": "Alta"
+    }
+  ]
+}
+
+
+Explicando como o Bedrock atua em cada uma das solicitações:
+
+1. Identificação de Temas - Em vez de apenas contar palavras-chave, os modelos entendem o contexto global do documento.
+Exemplo: Ao ler a ata de julho, o Bedrock identifica automaticamente que os tópicos centrais são "Revisão do Funil de Vendas do 2º Trimestre" e "Lançamento da Campanha Estratégica Rota 120", atribuindo categorias e tags temáticas padronizadas (ex.: #gestao_comercial, #planejamento_q3).
+
+2. Extração de Decisões Tomadas - O modelo distingue discussões informais de deliberações oficiais aprovadas pela diretoria, mesmo quando não há uma tabela explícita.
+Exemplo: Na ata em imagem (.png), o Bedrock lê o item de deliberações e extrai as decisões estratégicas, como "Aprovação da expansão da equipe comercial na Região Norte" e "Revisão da política de concessão de descontos por margem".
+
+3. Mapeamento de Responsáveis - Através do reconhecimento de entidades relacionais, ele não apenas identifica nomes de pessoas, mas quem é o dono de qual tarefa.
+Exemplo: Ao cruzar o texto, ele mapeia com precisão:
+    Mariana Costa - Presidência da Reunião.
+    Camila Rocha - Responsável por definir a lista das 120 contas da campanha.
+    Paulo Mendes - Responsável pela expansão de vendas no Norte.
+
+4. Rastreamento de Pendências, Prazos e Alertas - Identifica itens de ação (Action Items), datas limites (deadlines) e até alertas implícitos ou manuais.
+Exemplo: Ao analisar a imagem da ata, o Bedrock "enxerga" o círculo vermelho desenhado à mão e a anotação "ação prioritária", extraindo que a tarefa com prazo em 28/02/2026 possui urgência crítica, além de registrar o recado "conferir CRM".
+
+5. Geração de Resumos Inteligentes em Múltiplos Níveis - Sintetiza documentos extensos (como o PDF de 5 páginas) em resumos objetivos adaptados ao perfil do leitor:
+Exemplo:
+    Resumo Executivo (para Diretoria): Síntese em um parágrafo destacando que a receita ficou 8,6% abaixo da meta             devido a perdas por preço e postergações, com foco na nova campanha Rota 120.
+    Resumo Operacional (para as Equipes): Lista direta de ações pendentes dividida por responsável e data de entrega.
 ```
 
 ---
