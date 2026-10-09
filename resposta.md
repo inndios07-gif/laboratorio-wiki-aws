@@ -490,7 +490,19 @@ Explique como os documentos seriam divididos em trechos menores e preparados par
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+AWS Lambda (ou AWS Step Functions) recebe o objeto do S3 raw/.
+O texto extraído (Textract, PyMuPDF, python‑docx, etc.) passa por uma rotina de limpeza:
+    remoção de quebras de linha excessivas, caracteres de controle e espaços duplicados;
+    normalização de datas (ISO 8601) e de valores monetários (números decimais);
+    mascaramento de informações pessoais com Amazon Comprehend (PII detection).
+
+Upload → S3 (raw/)
+Evento → Lambda (extrai, limpa)
+Chunking (títulos, limites de tokens, sobreposição)
+Embedding (Bedrock)
+Indexação (OpenSearch k‑NN)
+Busca semântica (query → Bedrock → OpenSearch → retorno com source_uri)
+
 ```
 
 ---
@@ -510,7 +522,36 @@ Serviços que você pode considerar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Geração de embeddings (vetores semânticos)
+
+Para cada chunk:
+
+O Lambda chama Amazon Bedrock com o modelo de embedding (por exemplo, Titan Text Embeddings).
+O serviço devolve um vetor de ~1 024 dimensões.
+O vetor é armazenado junto ao chunk_id em Amazon OpenSearch Service (índice document‑chunks) ou em Amazon DynamoDB (campo embedding codificado em base64) – a escolha depende do volume de consultas: OpenSearch oferece k‑NN nativo, DynamoDB fornece busca por chave.
+
+Indexação para busca semântica
+
+No OpenSearch:
+
+json
+PUT document-chunks/_doc/c001
+{
+  "document_id": "VSA-COM-2026-07",
+  "source_uri": "s3://data-lake-vendas-sa/raw/ata_reuniao_vendas_sa.pdf",
+  "heading": "1. Visão geral",
+  "text": "Ata da reunião de 08/07/2026 – Revisão de junho…",
+  "embedding": [0.023, -0.112, ...]    // vetor numérico
+}
+O campo embedding usa o plugin k‑NN de OpenSearch, que permite consultas de similaridade (cosine, dot‑product).
+Metadados auxiliares (document_id, heading, type) permanecem como atributos filtráveis.
+
+Consulta semântica
+O usuário envia uma pergunta via aplicação (ex.: “Quais foram as decisões sobre a campanha Rota 120?”).
+A aplicação gera o embedding da query chamando Bedrock.
+O embedding é enviado para o índice OpenSearch com a API _knn_search.
+OpenSearch devolve os chunks mais semelhantes; o serviço agrega os resultados e exibe o texto completo ou fornece um resumo.
+
 ```
 
 ---
@@ -529,7 +570,27 @@ Considere explicar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Pergunta do usuário
+O visitante digita a pergunta em português na interface da Wiki (por exemplo, “Qual foi a decisão sobre a campanha Rota 120?”).
+
+Conversão da pergunta em vetor semântico
+O texto da pergunta é enviado ao Amazon Bedrock, que usa um modelo de embeddings (Titan Text Embeddings ou Claude 3). O modelo devolve um vetor numérico que representa o sentido da pergunta.
+
+Busca nos blocos de conteúdo (RAG – Retrieval‑Augmented Generation)
+Cada documento já foi fragmentado em pequenos trechos (chunks) durante a ingestãoe cada trecho recebeu seu próprio vetor de embeddings. Esses vetores estão armazenados no Amazon OpenSearch Service com o plugin k‑NN (busca por similaridade).
+
+O vetor da pergunta é comparado aos vetores dos trechos usando distância de cosseno.
+Os 5‑10 trechos mais semelhantes são devolvidos, juntamente com seus metadados (nome do arquivo, título da seção, página, etc.).
+
+Geração da resposta
+O prompt completo é enviado novamente ao Amazon Bedrock, desta vez para um modelo de geração de texto (Claude 3, Titan Text ou outro LLM‑generativo). O modelo combina o conteúdo dos trechos com seu conhecimento geral e produz uma resposta em linguagem natural.
+
+A resposta aparece na tela da Wiki.
+Cada informação citada traz um link direto ao arquivo original no Amazon S3 (por exemplo, [Ata de Reunião – Decisões] (s3://data‑lake‑vendas‑sa/raw/ata_reuniao_vendas_sa.pdf)), permitindo que o usuário abra o documento completo se quiser conferir detalhes.
+Se houver várias fontes, a UI exibe uma lista de “Referências” ao final da resposta.
+
+Dessa forma, a Wiki age como um assistente de perguntas e respostas que entende a linguagem natural do usuário, busca a informação correta nos documentos originais armazenados no AWS e devolve respostas claras, citando exatamente de onde cada dado foi extraído.
+
 ```
 
 ---
