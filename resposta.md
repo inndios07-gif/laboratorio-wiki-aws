@@ -815,7 +815,11 @@ Exemplo:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+- A evolução da Wiki Inteligente começaria reforçando a indexação híbrida, ou seja, manter o índice vetorial em Amazon OpenSearch (k‑NN) para busca rápida, ao mesmo tempo que um catálogo de termos em Amazon Athena (sobre o Glue Data Catalog) permite consultas SQL avançadas sobre os metadados.
+- Para a geração de respostas, poderíamos incorporar RAG com feedback em tempo real, onde a IA re‑rankea os chunks retornados antes de criar a resposta, usando um pequeno modelo de classificação também hospedado no Bedrock.
+- A interface poderia evoluir para um portal PW​A (Progressive Web App) hospedado em S3 + CloudFront, com suporte a voz e chatbot via Amazon Lex, oferecendo consultas por texto ou áudio.
+- Em relação a segurança, Amazon Cognito seria estendido com MFA e políticas de IAM Condition baseadas em tags de confidencialidade; o Lake Formation passaria a aplicar criptografia granular por coluna nos metadados.
+- Finalmente, o monitoramento de custos seria automatizado por AWS Budgets e Cost Explorer com alertas em SNS, permitindo ajustes de capacidade (auto‑scaling de OpenSearch e Lambda) quando a demanda crescer.
 ```
 
 ---
@@ -824,16 +828,16 @@ Preencha aqui.
 
 Antes de entregar, confirme se sua solução responde:
 
-- [ ] Como transformar documentos escaneados em texto?
-- [ ] Como lidar com diferentes formatos dentro da mesma pasta `raw/`?
-- [ ] Como armazenar os documentos originais?
-- [ ] Como preservar a rastreabilidade entre resposta e documento fonte?
-- [ ] Como organizar metadados?
-- [ ] Como criar busca semântica?
-- [ ] Como usar Amazon Bedrock na solução?
-- [ ] Como proteger documentos sensíveis?
-- [ ] Como monitorar falhas?
-- [ ] Como a empresa usaria essa Wiki no dia a dia?
+- [x ] Como transformar documentos escaneados em texto?
+- [ x] Como lidar com diferentes formatos dentro da mesma pasta `raw/`?
+- [x ] Como armazenar os documentos originais?
+- [x ] Como preservar a rastreabilidade entre resposta e documento fonte?
+- [x ] Como organizar metadados?
+- [ x] Como criar busca semântica?
+- [x ] Como usar Amazon Bedrock na solução?
+- [x ] Como proteger documentos sensíveis?
+- [x ] Como monitorar falhas?
+- [x ] Como a empresa usaria essa Wiki no dia a dia?
 
 ---
 
@@ -844,5 +848,9 @@ Escreva uma breve conclusão defendendo sua solução como se estivesse apresent
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+A nossa proposta transforma documentos brutos em conhecimento acionável por meio de uma arquitetura 100 % serverless, baseada nos serviços gerenciados da AWS. Os arquivos são preservados de forma imutável no S3, enriquecidos por OCR (Textract) ou extração direta, segmentados e indexados vetorialmente em OpenSearch, e consultados por uma busca semântica alimentada pelos modelos de linguagem do Bedrock. A camada de geração de respostas fornece informações precisas, citando a fonte original, enquanto a interface estática em S3 + CloudFront garante rapidez e baixa latência para o usuário final.
+
+Do ponto de vista de negócio, a solução entrega acesso imediato a dados críticos, reduzindo o tempo gasto em buscas manuais, aumenta a conformidade (Criptografia KMS, Object Lock, Cognito e tags de confidencialidade) e assegura auditabilidade total através do CloudTrail e dos logs centralizados. Operacionalmente, o modelo pay‑as‑you‑go elimina a necessidade de provisionamento de servidores, e o monitoramento integrado (CloudWatch, Budgets, QuickSight) permite controle rígido de custos e performance.
+
+Em resumo, esta arquitetura entrega valor rápido, escalável e seguro, alinhada às metas estratégicas de transformar informação em decisão e de modernizar a governança de documentos sem sobrecarregar a equipe de TI.
 ```
