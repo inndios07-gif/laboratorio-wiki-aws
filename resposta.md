@@ -685,7 +685,7 @@ Explique em poucas linhas a ideia central da sua arquitetura.
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+A arquitetura centraliza os documentos brutos no Amazon S3 (raw/) e, ao serem ingeridos, um AWS Lambda os limpa, divide‑os em trechos (chunking) e gera vetores semânticos com Amazon Bedrock (Titan Text Embeddings); esses vetores são armazenados em um índice k‑NN no Amazon OpenSearch Service para busca rápida por similaridade. Quando o usuário faz uma pergunta na interface estática hospedada em S3 + CloudFront, o texto da consulta é transformado em embedding (Bedrock) e comparado ao índice, retornando os trechos mais relevantes. O modelo generativo do Bedrock (Claude/Titan) então combina esses trechos e produz uma resposta em linguagem natural, citando a origem (URI S3). O acesso é controlado por Amazon Cognito (autenticação) e políticas IAM/etiquetas de bucket, garantindo que apenas usuários autorizados leiam ou modifiquem arquivos. Todas as chamadas de API passam por API Gateway e são registradas no AWS CloudTrail, permitindo auditoria detalhada de quem consultou qual documento. Métricas de latência, erros, uso de Bedrock e custos são enviadas ao Amazon CloudWatch, com alarmes que notificam a equipe via SNS; relatórios de uso e aprovação de respostas são visualizados em Amazon QuickSight. Assim, o projeto combina ingestão automatizada, busca vetorial, geração IA‑assistida e governança completa usando serviços totalmente gerenciados da AWS.
 ```
 
 ---
@@ -694,18 +694,22 @@ Preencha aqui.
 
 | Serviço AWS | Papel na solução |
 |---|---|
-| Amazon S3 | Preencha aqui |
-| Amazon Textract | Preencha aqui |
-| Amazon Bedrock | Preencha aqui |
-| Amazon Bedrock Knowledge Bases | Preencha aqui |
-| AWS Lambda | Preencha aqui |
-| AWS Step Functions | Preencha aqui |
-| Amazon CloudWatch | Preencha aqui |
-| AWS IAM | Preencha aqui |
-| AWS KMS | Preencha aqui |
-
-Adicione, remova ou ajuste os serviços conforme sua proposta.
-
+|Amazon S3 (bucket raw/) |Armazena os documentos originais (PDF, PNG, CSV, DOCX, MD) de forma imutável e versionada. |
+|Amazon S3 Object Lock| Garante que os arquivos nunca sejam excluídos ou sobrescritos (modo WORM). |
+|Amazon CloudFront | CDN que entrega o site estático (HTML/JS/CSS) rapidamente ao usuário. |
+|Amazon Cognito |Gerencia autenticação (login, SSO) e fornece tokens JWT para controle de acesso. |
+|Amazon API Gateway | Expõe endpoints REST/WebSocket que recebem as consultas do front‑end. |
+|AWS Lambda |	Orquestra a ingestão (limpeza, chunking), gera embeddings, consulta OpenSearch, chama Bedrock e devolve a resposta; também produz URLs temporárias para visualização de documentos. |
+|Amazon Textract | Faz OCR em PDFs escaneados e imagens, extraindo texto e tabelas. |
+|Amazon Bedrock | itan Text Embeddings: converte trechos e consultas em vetores semânticos. Modelos generativos (Claude/Titan): gera respostas em linguagem natural a partir dostrechos recuperados.|
+|Amazon DynamoDB| Catálogo de metadados (nome, tipo, data, tema, responsáveis etc.) e registro de feedback/consultas.|
+|AWS Glue Data Catalog| Descreve esquemas (ex.: CSV) e classifica tipos de documentos; facilita consultas em Athena.|
+|Amazon OpenSearch Service| Índice vetorial que armazena os embeddings de cada trecho e permite buscas por similaridade (RAG).|
+|Amazon CloudWatch| Coleta métricas (latência, erros, uso de Bedrock, custos) e gera alarmes.|
+|AWS CloudTrail| Registra todas as chamadas de API (acessos a S3, Lambda, OpenSearch, etc.) para auditoria.|
+|Amazon SNS| Envia notificações (e‑mail, Slack, SMS) quando alarmes de CloudWatch ou eventos críticos ocorrem.|
+|Amazon QuickSight| Visualiza dashboards de uso, taxa de aprovação de respostas, custos e performance.|
+|AWS Lake Formation|Centraliza políticas de controle de acesso baseadas em tags de confidencialidade.|
 ---
 
 ## 3. Fluxo de dados de ponta a ponta
