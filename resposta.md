@@ -734,7 +734,7 @@ Exemplo de estrutura:
 
 ```md
 1. Upload local – Os arquivos (PDF, PNG, CSV, DOCX, MD) são colocados na pasta raw/ do repositório ou enviados diretamente pelo usuário.
-2. incronização com S3 – Um script (AWS CLI aws s3 sync ou GitHub Actions) copia os arquivos para o bucket Amazon S3 data‑lake‑vendas‑sa/raw/.
+2. Sincronização com S3 – Um script (AWS CLI aws s3 sync ou GitHub Actions) copia os arquivos para o bucket Amazon S3 data‑lake‑vendas‑sa/raw/.
 3. Detecção de formato – O Lambda lê a assinatura do arquivo; se for imagem ou PDF escaneado, encaminha para Amazon Textract (modo assíncrono) que devolve texto, tabelas e anotações manuscritas.
 4. Extração direta – Se o documento já for digital (PDF nativo, CSV, DOCX, MD), o Lambda usa bibliotecas PyMuPDF, python‑docx ou leitura de CSV para extrair o conteúdo puro sem OCR.
 5. Limpeza e padronização – O texto bruto passa por rotinas.
@@ -761,7 +761,10 @@ raw/ → Amazon S3 → Lambda/Step Functions → Textract → S3 Processado → 
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+raw/ → Amazon S3 bucket raw/ → Amazon Textract (OCR) (imagens / PDFs) → Extract metadata → DynamoDB →
+Chunking (split in sections) → JSON chunks → Generate embeddings (Bedrock – Titan Text Embeddings) →
+Index embeddings & metadata in OpenSearch (k‑NN index) → User (browser)searches Wiki → API Gateway (REST)  →
+Lambda Query → Bedrock LLM → UI displays  answer + link → Answer JSON → Lambda returns
 ```
 
 ---
