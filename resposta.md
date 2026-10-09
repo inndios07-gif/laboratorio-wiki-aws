@@ -610,7 +610,30 @@ Serviços que você pode considerar:
 **Sua resposta:**
 
 ```md
-Preencha aqui.
+Proponho uma interface simples abaixo segue os componentes da interface:
+1. Barra de busca - Campo de texto onde o usuário digita a pergunta em linguagem natural. Usaria API Gateway - Lambda - Bedrock (embeddings) - OpenSearch
+
+2. Resultados - Lista de respostas curtas com citações e links para o documento original. Usaria Lambda formata a resposta do Bedrock e inclui s3://…/raw/... como hyperlink.
+
+3. Painel de navegação - Menu lateral com categorias (Atas, Relatórios, Dados CRM) e filtros por data, responsável, confidencialidade. Usaria Dados carregados dinamicamente de DynamoDB via API.
+
+4. Visualizador de documento - Área modal ou nova aba que exibe PDF, PNG ou CSV renderizado (preview) sem download. Usaria Amazon S3 presigned URL (gerada pelo Lambda) - iframe/PDF.js ou SheetJS para CSV.
+
+---------------------------------------------------------
+ |  Logo Wiki Inteligente   |  [Login/Logout]            |
+ ---------------------------------------------------------
+ |  Busca: _______________________________________ [🔍]|
+ ---------------------------------------------------------
+ |  ⎡ Atas        ]  ⎡ Relatórios ]  ⎡ Dados CRM   ]    |
+ |  ⎡ 2026‑07‑08 ]  ⎡ 2026‑01‑15]  ⎡ 2026‑07‑... ]    |
+ ---------------------------------------------------------
+ |  Resposta:                                           |
+ |  "A campanha Rota 120 será lançada no Q3..."          |
+ |  Fonte:  ata_reuniao_vendas_sa.pdf (08/07/2026)      |
+ |  [ Ver documento ]                                   |
+ ---------------------------------------------------------
+ |  👍  👎  (avaliação)                                 |
+ ---------------------------------------------------------
 ```
 
 ---
